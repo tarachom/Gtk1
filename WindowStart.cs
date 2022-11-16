@@ -20,6 +20,8 @@ namespace GtkTest
             VBox vbox = new VBox();
             Add(vbox);
 
+            #region Кнопки
+
             //Кнопки
             HBox hBoxButton = new HBox();
             vbox.PackStart(hBoxButton, false, false, 10);
@@ -43,6 +45,8 @@ namespace GtkTest
             Button bDelete = new Button("Видалити");
             bDelete.Clicked += OnDelete;
             hBoxButton.PackStart(bDelete, false, false, 10);
+
+            #endregion
 
             //Список
             HBox hboxTree = new HBox();
@@ -129,7 +133,9 @@ namespace GtkTest
             {
                 Store!.Clear();
 
-                NpgsqlCommand command = DataSource.CreateCommand("SELECT id, name, \"desc\" FROM tab1 ORDER BY id");
+                NpgsqlCommand command = DataSource.CreateCommand(
+                    "SELECT id, name, \"desc\" FROM tab1 ORDER BY id");
+
                 NpgsqlDataReader reader = command.ExecuteReader();
 
                 while (reader.Read())
@@ -147,7 +153,9 @@ namespace GtkTest
         {
             if (DataSource != null)
             {
-                NpgsqlCommand command = DataSource.CreateCommand("INSERT INTO tab1 (name, \"desc\") VALUES (@name, @desc)");
+                NpgsqlCommand command = DataSource.CreateCommand(
+                    "INSERT INTO tab1 (name, \"desc\") VALUES (@name, @desc)");
+
                 command.Parameters.Add(new NpgsqlParameter("name", "test"));
                 command.Parameters.Add(new NpgsqlParameter("desc", "test"));
 
@@ -161,7 +169,8 @@ namespace GtkTest
         {
             if (DataSource != null)
             {
-                NpgsqlCommand command = DataSource.CreateCommand("UPDATE tab1 SET name = @name, \"desc\" = @desc WHERE id = @id");
+                NpgsqlCommand command = DataSource.CreateCommand(
+                    "UPDATE tab1 SET name = @name, \"desc\" = @desc WHERE id = @id");
 
                 TreeIter iter;
                 if (Store!.GetIterFirst(out iter))
@@ -188,7 +197,8 @@ namespace GtkTest
             {
                 if (treeView!.Selection.CountSelectedRows() != 0)
                 {
-                    NpgsqlCommand command = DataSource.CreateCommand("DELETE FROM tab1 WHERE id = @id");
+                    NpgsqlCommand command = DataSource.CreateCommand(
+                        "DELETE FROM tab1 WHERE id = @id");
 
                     TreePath[] selectionRows = treeView.Selection.GetSelectedRows();
 
