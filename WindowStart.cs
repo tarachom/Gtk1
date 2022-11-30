@@ -54,7 +54,12 @@ namespace GtkTest
 
             AddColumn();
 
-            hboxTree.PackStart(treeView, true, true, 10);
+            ScrolledWindow scroll = new ScrolledWindow() { ShadowType = ShadowType.In };
+            scroll.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
+            scroll.Add(treeView);
+
+            hboxTree.PackStart(scroll, true, true, 10);
+
 
             ShowAll();
         }
